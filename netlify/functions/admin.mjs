@@ -1,3 +1,4 @@
+import { resolverMapa } from '../lib/maps.mjs';
 import {
   store, json, Pub, firmar, verificar, leerCookie, cookieSesion, DURACION_SESION,
   claveValida, guardarClave, leer, guardar, borrarImgs, keyValida, limpiar, hoy, str,
@@ -51,6 +52,7 @@ export default async (req, context) => {
 
     if (ruta === 'props' && metodo === 'POST') {            // crear
       const d = await leer(st);
+      if (!d.inicializado) throw new Pub('Primero hay que importar las propiedades actuales', 409);
       const item = limpiar(await req.json());
       item.id = d.nextId;
       item.fecha = hoy();
@@ -112,6 +114,18 @@ export default async (req, context) => {
       if (!(u8[0] === 0xff && u8[1] === 0xd8 && u8[2] === 0xff)) throw new Pub('La foto debe ser JPG');
       await st.set((miniatura ? 'thumb:' : 'img:') + k, buf);
       return json({ ok: true });
+    }
+
+    if (ruta === 'img' && metodo === 'DELETE') {            // descartar una foto subida y no usada
+      const k = url.searchParams.get('k') || '';
+      const d = await leer(st);
+      if (keyValida(k) && !d.items.some((p) => (p.imgs || []).includes(k))) await borrarImgs(st, [k]);
+      return json({ ok: true });
+    }
+
+    if (ruta === 'maps' && metodo === 'POST') {             // link de Google Maps -> coordenadas
+      const b = await req.json().catch(() => ({}));
+      return json(await resolverMapa(b.url));
     }
 
     /* ---------- Cambiar contraseña ---------- */

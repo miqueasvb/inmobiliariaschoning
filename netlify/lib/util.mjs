@@ -27,7 +27,7 @@ export const DURACION_SESION = 3 * 24 * 3600 * 1000;   // 3 días
 
 function secreto() {
   const s = process.env.AUTH_SECRET;
-  if (!s || s.length < 24) throw new Pub('El panel no está configurado todavía (faltan variables de entorno en Netlify).', 500);
+  if (!s || s.length < 24) throw new Pub('AUTH_SECRET ' + (s ? 'es muy corto (' + s.length + ' caracteres, mínimo 24)' : 'no está definido en este deploy'), 500);
   return s;
 }
 
