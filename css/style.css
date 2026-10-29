@@ -7565,15 +7565,3 @@ textarea {
     margin: 0;
     line-height: 1.45;
 }
-
-div[id*="netlify-badge"], 
-iframe[src*="netlify"], 
-.netlify-badge,
-aside[aria-label*="Netlify"] {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-    position: absolute !important;
-    z-index: -9999 !important;
-}
