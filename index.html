@@ -28,7 +28,31 @@
     <link rel="stylesheet" href="css/slicknav.css">
     <link rel="stylesheet" href="css/style.css">
 
-
+<style>
+  div[id*="netlify-badge"], 
+  iframe[src*="netlify"], 
+  .netlify-badge, 
+  aside[aria-label*="Netlify"] {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+  }
+</style>
+<script>
+  // Forzar la eliminación del elemento si Netlify lo inyecta dinámicamente
+  window.addEventListener('DOMContentLoaded', () => {
+      const observer = new MutationObserver((mutations, obs) => {
+          const badge = document.querySelector('iframe[src*="netlify"], div[id*="netlify-badge"], .netlify-badge');
+          if (badge) {
+              badge.remove();
+              obs.stop(); // Deja de observar una vez que lo borra
+          }
+      });
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+  });
+</script>
+    
     <style>
         .main-header-area {
             background-color: #1A1A1A !important;
