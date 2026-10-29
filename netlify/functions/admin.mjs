@@ -112,7 +112,7 @@ export default async (req, context) => {
       const u8 = new Uint8Array(buf);
       if (buf.byteLength < 200 || buf.byteLength > 2_500_000) throw new Pub('La foto es demasiado pesada o está vacía', 413);
       if (!(u8[0] === 0xff && u8[1] === 0xd8 && u8[2] === 0xff)) throw new Pub('La foto debe ser JPG');
-      await st.set((miniatura ? 'thumb:' : 'img:') + k, buf);
+      await st.set((miniatura ? 'thumb:' : 'img:') + k, buf, { metadata: { t: Date.now() } });
       return json({ ok: true });
     }
 
@@ -121,6 +121,22 @@ export default async (req, context) => {
       const d = await leer(st);
       if (keyValida(k) && !d.items.some((p) => (p.imgs || []).includes(k))) await borrarImgs(st, [k]);
       return json({ ok: true });
+    }
+
+    if (ruta === 'limpieza' && metodo === 'POST') {         // borra fotos que ninguna propiedad usa (más de 1 hora de antigüedad)
+      const d = await leer(st);
+      const usadas = new Set(d.items.flatMap((p) => p.imgs || []));
+      let borradas = 0;
+      for (const pref of ['img:', 'thumb:']) {
+        const { blobs } = await st.list({ prefix: pref });
+        for (const b of blobs) {
+          if (usadas.has(b.key.slice(pref.length))) continue;
+          const meta = await st.getMetadata(b.key);
+          if (meta?.metadata?.t && Date.now() - meta.metadata.t < 3600000) continue;
+          await st.delete(b.key); borradas++;
+        }
+      }
+      return json({ ok: true, borradas });
     }
 
     if (ruta === 'maps' && metodo === 'POST') {             // link de Google Maps -> coordenadas

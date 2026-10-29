@@ -278,7 +278,7 @@ dialog h2{font-size:1.15rem;font-weight:800}
   var norm = function (t) { return String(t || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); };
   var num = function (v) { return parseInt(String(v).replace(/\D/g, ''), 10) || 0; };
   var imgSrc = function (k, m) { return (/^prop-\d/.test(k) ? '/img/propiedades/' : '/media/') + k + (m ? '-m' : '') + '.jpg'; };
-  var autoImp = false;
+  var autoImp = false, dirty = false, limpiado = false;
   var TIPOS = { casa: 'Casa', departamento: 'Departamento', terreno: 'Terreno', local: 'Local', campo: 'Campo / quinta' };
 
   var items = [], inicializado = true, edit = null, fotos = [], op = 'venta', moneda = 'USD';
@@ -322,6 +322,7 @@ dialog h2{font-size:1.15rem;font-weight:800}
     items = d.items; inicializado = d.inicializado;
     pintarLista();
     if (!inicializado && !autoImp) { autoImp = true; $('btnImport').click(); }
+    if (inicializado && !limpiado) { limpiado = true; api('limpieza', { method: 'POST' }).catch(function () {}); }
   }
 
   /* ---------- Listado ---------- */
@@ -343,7 +344,8 @@ dialog h2{font-size:1.15rem;font-weight:800}
       return !q || norm([p.titulo, p.ubic, p.ciudad, p.barrio, TIPOS[p.tipo], p.op].join(' ')).indexOf(q) >= 0;
     }).sort(function (a, b) { return a.fecha < b.fecha ? 1 : a.fecha > b.fecha ? -1 : b.id - a.id; });
 
-    $('contador').textContent = items.length ? r.length + ' de ' + items.length + ' propiedades' : '';
+    var np = items.filter(function (x) { return x.activa !== false; }).length;
+    $('contador').textContent = items.length ? items.length + ' propiedades · ' + np + ' publicadas · ' + (items.length - np) + ' pausadas' + (r.length !== items.length ? ' (mostrando ' + r.length + ')' : '') : '';
     if (!r.length) {
       $('lista').innerHTML = '<div class="vacio"><h3>' + (items.length ? 'Ninguna coincide con la búsqueda' : 'Todavía no hay propiedades') + '</h3><p class="muted">' + (items.length ? 'Probá con otra palabra o cambiá el filtro.' : 'Tocá “Nueva propiedad” para cargar la primera.') + '</p></div>';
       return;
@@ -356,6 +358,7 @@ dialog h2{font-size:1.15rem;font-weight:800}
         '<div class="tags"><span class="tag ' + p.op + '">' + (p.op === 'venta' ? 'Venta' : 'Alquiler') + '</span><span class="tag">' + esc(TIPOS[p.tipo] || p.tipo) + '</span>' +
         (on ? '' : '<span class="tag pausa">Pausada</span>') + '<span class="precio">' + esc(precioTxt(p)) + '</span></div></div>' +
         '<div class="acc"><button class="btn btn-sm" data-a="editar">Editar</button>' +
+        (on ? '<a class="btn btn-sm" href="/propiedad.html?id=' + p.id + '" target="_blank" rel="noopener">Ver en la web</a>' : '') +
         '<button class="btn btn-sm" data-a="pausar">' + (on ? 'Pausar' : 'Publicar') + '</button>' +
         '<button class="btn btn-sm btn-peligro" data-a="borrar">Eliminar</button></div></article>';
     }).join('');
@@ -436,8 +439,8 @@ dialog h2{font-size:1.15rem;font-weight:800}
     $('fExtras').value = extras.join(', ');
     $('fDesc').value = p ? p.desc || '' : '';
     $('fActiva').checked = p ? p.activa !== false : true;
-    fotos = (p ? normalizar(p) : []).map(function (k) { return { key: k, url: imgSrc(k, 1), listo: true }; });
-    pintarFotos(); $('edEstado').textContent = '';
+    fotos = (p ? normalizar(p) : []).map(function (k) { return { key: k, url: imgSrc(k, 1), listo: true, orig: true }; });
+    pintarFotos(); dirty = false; $('edEstado').textContent = '';
     $('editor').hidden = false; document.body.style.overflow = 'hidden';
     $('editor').scrollTop = 0; $('fTitulo').focus({ preventScroll: true });
   }
@@ -446,9 +449,15 @@ dialog h2{font-size:1.15rem;font-weight:800}
     $('editor').hidden = true; document.body.style.overflow = ''; edit = null;
   }
   $('btnNueva').addEventListener('click', function () { abrirEditor(null); });
-  $('edCerrar').addEventListener('click', cerrarEditor);
-  $('edCancelar').addEventListener('click', cerrarEditor);
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('editor').hidden && !$('dlgClave').open) cerrarEditor(); });
+  function pedirCerrar() {
+    if (dirty && !confirm('Tenés cambios sin guardar. ¿Salir igual?')) return;
+    fotos.forEach(function (f) { if (f.listo && !f.orig) api('img?k=' + f.key, { method: 'DELETE' }).catch(function () {}); });
+    cerrarEditor();
+  }
+  $('formProp').addEventListener('input', function () { dirty = true; });
+  $('edCerrar').addEventListener('click', pedirCerrar);
+  $('edCancelar').addEventListener('click', pedirCerrar);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('editor').hidden && !$('dlgClave').open) pedirCerrar(); });
   $('fPrecio').addEventListener('input', function () { var n = num(this.value); this.value = n ? miles(n) : ''; });
   ['fDorm', 'fBanos'].forEach(function (id) { $(id).addEventListener('input', function () { this.value = this.value.replace(/\D/g, '').slice(0, 2); }); });
 
@@ -468,7 +477,7 @@ dialog h2{font-size:1.15rem;font-weight:800}
   /* Fotos */
   function pintarFotos() {
     $('fotos').innerHTML = fotos.map(function (f, i) {
-      return '<div class="foto" data-i="' + i + '"><img src="' + esc(f.url) + '" alt="Foto ' + (i + 1) + '" onerror="this.style.opacity=.2">' +
+      return '<div class="foto" data-i="' + i + '" draggable="true" title="Arrastrá para cambiar el orden"><img src="' + esc(f.url) + '" alt="Foto ' + (i + 1) + '" onerror="this.style.opacity=.2">' +
         '<span class="portada">' + (i === 0 ? 'Portada' : '') + '</span><div class="foto-acc">' +
         '<button type="button" data-mv="-1"' + (i === 0 ? ' disabled' : '') + ' aria-label="Mover antes">←</button>' +
         '<button type="button" data-mv="1"' + (i === fotos.length - 1 ? ' disabled' : '') + ' aria-label="Mover después">→</button>' +
@@ -483,7 +492,15 @@ dialog h2{font-size:1.15rem;font-weight:800}
     var card = e.target.closest('.foto[data-i]'); if (!card) return;
     var i = parseInt(card.dataset.i, 10), mv = e.target.closest('[data-mv]');
     if (mv) { var j = i + parseInt(mv.dataset.mv, 10); var t = fotos[i]; fotos[i] = fotos[j]; fotos[j] = t; pintarFotos(); }
-    else if (e.target.closest('[data-rm]')) { var q = fotos.splice(i, 1)[0]; if (q.obj) URL.revokeObjectURL(q.obj); pintarFotos(); }
+    else if (e.target.closest('[data-rm]')) { var q = fotos.splice(i, 1)[0]; if (q.obj) URL.revokeObjectURL(q.obj); if (q.listo && !q.orig) api('img?k=' + q.key, { method: 'DELETE' }).catch(function () {}); pintarFotos(); }
+  });
+  var arrastrando = -1;
+  $('fotos').addEventListener('dragstart', function (e) { var c = e.target.closest('.foto[data-i]'); if (!c) return; arrastrando = +c.dataset.i; c.style.opacity = .4; e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', ''); });
+  $('fotos').addEventListener('dragend', function () { arrastrando = -1; pintarFotos(); });
+  $('fotos').addEventListener('dragover', function (e) { if (arrastrando >= 0 && e.target.closest('.foto[data-i]')) e.preventDefault(); });
+  $('fotos').addEventListener('drop', function (e) {
+    var c = e.target.closest('.foto[data-i]'); if (!c || arrastrando < 0) return; e.preventDefault();
+    var a = fotos.splice(arrastrando, 1)[0]; fotos.splice(+c.dataset.i, 0, a); arrastrando = -1; pintarFotos();
   });
 
   async function escalar(bmp, max, q, maxKB) {
