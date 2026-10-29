@@ -688,6 +688,7 @@ h1,h2,h3,h4,p,ul{margin:0}
     function norm(t) { return String(t).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
     function miles(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
 
+    var imgSrc = function (k, m) { return (/^prop-\d/.test(k) ? 'img/propiedades/' : '/media/') + k + (m ? '-m' : '') + '.jpg'; };
     var SVG = function (d) { return '<svg viewBox="0 0 24 24" aria-hidden="true">' + d + '</svg>'; };
     var ICONO = {
         dorm: SVG('<path d="M3 18v-7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v7M3 15h18M7 9V6h10v3"/>'),
@@ -783,7 +784,7 @@ h1,h2,h3,h4,p,ul{margin:0}
 
     function fotoHTML(p, extra) {
         return CASA +
-            '<img src="img/propiedades/' + (p.imgs && p.imgs[0] ? p.imgs[0] : 'prop-' + p.id) + '-m.jpg" alt="' + esc(p.titulo) + '" loading="lazy" onerror="this.remove()">' +
+            '<img src="' + imgSrc(p.imgs && p.imgs[0] ? p.imgs[0] : 'prop-' + p.id, 1) + '" alt="' + esc(p.titulo) + '" loading="lazy" onerror="this.remove()">' +
             '<span class="sch-etiqueta sch-etiqueta-' + p.op + '">' + (p.op === 'venta' ? 'En venta' : 'En alquiler') + '</span>' +
             '<span class="sch-card-tipo">' + esc(TIPOS[p.tipo]) + '</span>' + (extra || '');
     }

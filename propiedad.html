@@ -441,7 +441,7 @@ h1,h2,h3,h4,p,ul{margin:0}
     var precioHTML = esc(precio) + (p.precio && p.op === 'alquiler' ? ' <small>/mes</small>' : '');
     var msg = 'Hola, vengo de la web de Schöning Negocios Inmobiliarios y quisiera consultar por la propiedad: ' + p.titulo + ' (' + p.ubic + '). ' + location.href.split('#')[0];
     var n = Math.max(1, Math.min(p.imgs ? p.imgs.length : (parseInt(p.fotos, 10) || 1), 24));
-    var foto = function (i, m) { var k = p.imgs ? (p.imgs[i] || 'sin-foto') : 'prop-' + p.id + (i ? '-' + (i + 1) : ''); return 'img/propiedades/' + k + (m ? '-m' : '') + '.jpg'; };
+    var foto = function (i, m) { var k = p.imgs ? (p.imgs[i] || 'sin-foto') : 'prop-' + p.id + (i ? '-' + (i + 1) : ''); return (/^prop-\d/.test(k) ? 'img/propiedades/' : '/media/') + k + (m ? '-m' : '') + '.jpg'; };
     var q = encodeURIComponent(p.mapa || (p.ubic + ', Chaco, Argentina'));
 
     document.title = p.titulo + ' | Schöning Negocios Inmobiliarios';
