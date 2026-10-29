@@ -7565,3 +7565,106 @@ textarea {
     margin: 0;
     line-height: 1.45;
 }
+
+
+.sch-serv {
+    background: var(--sch-bg);
+    padding: 90px 0;
+}
+.sch-serv-wrap {
+    width: min(1240px, 100% - 48px);
+    margin: 0 auto;
+}
+.sch-serv-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 48px;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.sch-serv-head h2 {
+    margin: 8px 0 0;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--sch-tinta);
+}
+.sch-serv-intro {
+    max-width: 36ch;
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--sch-gris);
+    line-height: 1.5;
+}
+
+/* Grilla asimétrica o limpia estilo estudio de diseño */
+.sch-serv-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+@media (max-width: 768px) {
+    .sch-serv-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.sch-serv-card {
+    background: #fff;
+    border: 1px solid var(--sch-borde);
+    border-radius: 20px;
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    transition: border-color .25s, transform .25s;
+}
+.sch-serv-card:hover {
+    border-color: var(--sch-tinta);
+    transform: translateY(-3px);
+}
+.sch-serv-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+.sch-serv-num {
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: var(--sch-gris);
+}
+.sch-serv-ico {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: #F2F2F2;
+}
+.sch-serv-ico svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: var(--sch-tinta);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.sch-serv-card h3 {
+    margin: 0 0 10px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--sch-tinta);
+}
+.sch-serv-card p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    font-weight: 500;
+    color: var(--sch-gris);
+}
