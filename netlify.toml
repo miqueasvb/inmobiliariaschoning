@@ -7,12 +7,6 @@
 [functions]
   directory = "netlify/functions"
 
-# Fotos subidas desde el panel. Si existe un archivo real con ese nombre, Netlify lo sirve primero.
-[[redirects]]
-  from = "/img/propiedades/*"
-  to = "/.netlify/functions/img?f=:splat"
-  status = 200
-
 # Que el código del backend no se pueda descargar como archivo público
 [[redirects]]
   from = "/netlify/*"
