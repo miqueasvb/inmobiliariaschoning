@@ -211,8 +211,11 @@ dialog h2{font-size:1.15rem;font-weight:800}
       </div>
       <label class="fld"><span class="lbl">Texto de ubicación (se ve en la tarjeta)</span><input id="fUbic" maxlength="150" placeholder="Si lo dejás vacío se arma con Barrio + Ciudad">
         </label>
-      <label class="fld"><span class="lbl">Dirección para el mapa (opcional)</span><input id="fMapa" maxlength="200" placeholder="Ej: José Hernández 387, Presidencia Roque Sáenz Peña, Chaco">
-        <span class="hint">Si lo dejás vacío, el mapa usa el texto de ubicación.</span></label>
+      <div class="fld"><span class="lbl">Ubicación en Google Maps</span>
+        <input id="fMapa" maxlength="600" placeholder="Pegá acá el link de Google Maps (o escribí la dirección)">
+        <span class="hint"><b>Cómo:</b> en Google Maps buscá la propiedad → tocá <b>Compartir</b> → <b>Copiar vínculo</b> → pegalo acá. <a href="https://www.google.com/maps" target="_blank" rel="noopener">Abrir Google Maps</a></span>
+        <span class="hint" id="mapaEstado" role="status"></span>
+        <iframe id="mapaPrev" title="Vista previa del mapa" hidden loading="lazy" style="width:100%;height:210px;border:0;border-radius:13px;margin-top:8px"></iframe></div>
 
       <p class="sec">Precio</p>
       <div class="g2">
@@ -274,6 +277,8 @@ dialog h2{font-size:1.15rem;font-weight:800}
   var miles = function (n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); };
   var norm = function (t) { return String(t || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); };
   var num = function (v) { return parseInt(String(v).replace(/\D/g, ''), 10) || 0; };
+  var imgSrc = function (k, m) { return (/^prop-\d/.test(k) ? '/img/propiedades/' : '/media/') + k + (m ? '-m' : '') + '.jpg'; };
+  var autoImp = false;
   var TIPOS = { casa: 'Casa', departamento: 'Departamento', terreno: 'Terreno', local: 'Local', campo: 'Campo / quinta' };
 
   var items = [], inicializado = true, edit = null, fotos = [], op = 'venta', moneda = 'USD';
@@ -316,6 +321,7 @@ dialog h2{font-size:1.15rem;font-weight:800}
     var d = await api('props');
     items = d.items; inicializado = d.inicializado;
     pintarLista();
+    if (!inicializado && !autoImp) { autoImp = true; $('btnImport').click(); }
   }
 
   /* ---------- Listado ---------- */
@@ -345,7 +351,7 @@ dialog h2{font-size:1.15rem;font-weight:800}
     $('lista').innerHTML = r.map(function (p) {
       var on = p.activa !== false, k = normalizar(p)[0];
       return '<article class="fila' + (on ? '' : ' pausada') + '" data-id="' + p.id + '">' +
-        '<div class="thumb">' + (k ? '<img src="/img/propiedades/' + esc(k) + '-m.jpg" alt="" loading="lazy" onerror="this.remove()">' : '') + '</div>' +
+        '<div class="thumb">' + (k ? '<img src="' + esc(imgSrc(k, 1)) + '" alt="" loading="lazy" onerror="this.remove()">' : '') + '</div>' +
         '<div style="min-width:0"><h3>' + esc(p.titulo) + '</h3><p class="sub">' + esc(p.ubic || '') + '</p>' +
         '<div class="tags"><span class="tag ' + p.op + '">' + (p.op === 'venta' ? 'Venta' : 'Alquiler') + '</span><span class="tag">' + esc(TIPOS[p.tipo] || p.tipo) + '</span>' +
         (on ? '' : '<span class="tag pausa">Pausada</span>') + '<span class="precio">' + esc(precioTxt(p)) + '</span></div></div>' +
@@ -391,7 +397,6 @@ dialog h2{font-size:1.15rem;font-weight:800}
         s.onerror = function () { rej(new Error('No encontré el archivo js/propiedades-data.js en tu sitio')); };
         document.head.appendChild(s);
       });
-      if (!lista.length) throw new Error('No hay propiedades para importar');
       lista = lista.map(function (p) { return Object.assign({}, p, { imgs: normalizar(p), activa: true }); });
       var r = await api('props/import', { method: 'POST', json: { items: lista } });
       await cargar();
@@ -425,13 +430,13 @@ dialog h2{font-size:1.15rem;font-weight:800}
     $('fCiudad').value = p ? p.ciudad || '' : '';
     $('fBarrio').value = p ? p.barrio || '' : '';
     $('fUbic').value = p ? p.ubic || '' : '';
-    $('fMapa').value = p ? p.mapa || '' : '';
+    $('fMapa').value = p ? p.mapa || '' : ''; $('mapaEstado').textContent = ''; $('mapaPrev').hidden = true; if (p && p.mapa) resolverMapa();
     $('fPrecio').value = p && p.precio ? miles(p.precio) : '';
     $('fDorm').value = dorm || ''; $('fBanos').value = banos || ''; $('fSup').value = sup;
     $('fExtras').value = extras.join(', ');
     $('fDesc').value = p ? p.desc || '' : '';
     $('fActiva').checked = p ? p.activa !== false : true;
-    fotos = (p ? normalizar(p) : []).map(function (k) { return { key: k, url: '/img/propiedades/' + k + '-m.jpg', listo: true }; });
+    fotos = (p ? normalizar(p) : []).map(function (k) { return { key: k, url: imgSrc(k, 1), listo: true }; });
     pintarFotos(); $('edEstado').textContent = '';
     $('editor').hidden = false; document.body.style.overflow = 'hidden';
     $('editor').scrollTop = 0; $('fTitulo').focus({ preventScroll: true });
@@ -446,6 +451,19 @@ dialog h2{font-size:1.15rem;font-weight:800}
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('editor').hidden && !$('dlgClave').open) cerrarEditor(); });
   $('fPrecio').addEventListener('input', function () { var n = num(this.value); this.value = n ? miles(n) : ''; });
   ['fDorm', 'fBanos'].forEach(function (id) { $(id).addEventListener('input', function () { this.value = this.value.replace(/\D/g, '').slice(0, 2); }); });
+
+  async function resolverMapa() {
+    var inp = $('fMapa'), v = inp.value.trim(), e = $('mapaEstado'), f = $('mapaPrev');
+    if (!v) { e.textContent = ''; f.hidden = true; return true; }
+    e.textContent = 'Buscando ubicación…';
+    try {
+      if (/^https?:/i.test(v)) { v = (await api('maps', { method: 'POST', json: { url: v } })).mapa; inp.value = v; }
+      f.src = 'https://www.google.com/maps?q=' + encodeURIComponent(v) + '&z=16&output=embed'; f.hidden = false;
+      e.textContent = '✓ Ubicación lista. Verificá que el mapa muestre el lugar correcto.'; return true;
+    } catch (err) { e.textContent = '⚠ ' + err.message; f.hidden = true; return false; }
+  }
+  $('fMapa').addEventListener('change', resolverMapa);
+  $('fMapa').addEventListener('paste', function () { setTimeout(resolverMapa, 60); });
 
   /* Fotos */
   function pintarFotos() {
@@ -468,34 +486,37 @@ dialog h2{font-size:1.15rem;font-weight:800}
     else if (e.target.closest('[data-rm]')) { var q = fotos.splice(i, 1)[0]; if (q.obj) URL.revokeObjectURL(q.obj); pintarFotos(); }
   });
 
-  function escalar(bmp, max, calidad) {
-    var s = Math.min(1, max / Math.max(bmp.width, bmp.height));
-    var c = document.createElement('canvas'); c.width = Math.round(bmp.width * s); c.height = Math.round(bmp.height * s);
-    var x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); x.drawImage(bmp, 0, 0, c.width, c.height);
-    return new Promise(function (res) { c.toBlob(res, 'image/jpeg', calidad); });
+  async function escalar(bmp, max, q, maxKB) {
+    var k = Math.min(1, max / Math.max(bmp.width, bmp.height)), w = Math.round(bmp.width * k), h = Math.round(bmp.height * k);
+    var c = document.createElement('canvas'); c.width = w; c.height = h;
+    var x = c.getContext('2d'); x.imageSmoothingQuality = 'high'; x.fillStyle = '#fff'; x.fillRect(0, 0, w, h); x.drawImage(bmp, 0, 0, w, h);
+    var b;
+    for (; q >= 0.5; q -= 0.07) { b = await new Promise(function (res) { c.toBlob(res, 'image/jpeg', q); }); if (b.size <= maxKB * 1024) break; }
+    return b;
   }
   async function procesar(file) {
     var bmp;
     try { bmp = await createImageBitmap(file, { imageOrientation: 'from-image' }); }
     catch (e) { try { bmp = await createImageBitmap(file); } catch (e2) { throw new Error('No pude leer la foto “' + file.name + '”'); } }
-    var r = { full: await escalar(bmp, 1600, 0.82), thumb: await escalar(bmp, 640, 0.78) };
+    var r = { full: await escalar(bmp, 1600, 0.85, 350), thumb: await escalar(bmp, 640, 0.78, 60) };
     if (bmp.close) bmp.close();
     return r;
   }
   inFotos.addEventListener('change', async function () {
     var files = Array.prototype.slice.call(inFotos.files); inFotos.value = '';
     var cupo = 24 - fotos.length; if (files.length > cupo) { files = files.slice(0, cupo); aviso('Máximo 24 fotos por propiedad', true); }
+    var antes = 0, despues = 0;
     for (var i = 0; i < files.length; i++) {
       $('edEstado').textContent = 'Preparando foto ' + (i + 1) + ' de ' + files.length + '…';
       try {
-        var b = await procesar(files[i]);
+        var b = await procesar(files[i]); antes += files[i].size; despues += b.full.size;
         var key = 'p-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7).replace(/[^a-z0-9]/g, 'x');
         var obj = URL.createObjectURL(b.thumb);
         fotos.push({ key: key, url: obj, obj: obj, blob: b, listo: false });
         pintarFotos();
       } catch (err) { aviso(err.message, true); }
     }
-    $('edEstado').textContent = '';
+    $('edEstado').textContent = antes ? 'Fotos optimizadas: ' + (antes / 1048576).toFixed(1) + ' MB → ' + Math.round(despues / 1024) + ' KB (−' + Math.round(100 - despues * 100 / antes) + '%)' : '';
   });
 
   async function subirFoto(f) {
@@ -517,6 +538,7 @@ dialog h2{font-size:1.15rem;font-weight:800}
     if (sup) datos.push(['sup', sup]);
     $('fExtras').value.split(',').forEach(function (t) { t = t.trim(); if (t) datos.push(['ok', t]); });
 
+    if (!(await resolverMapa())) { aviso('Revisá el link del mapa (o borralo para guardar sin mapa)', true); return; }
     var btn = $('edGuardar'); btn.disabled = true;
     try {
       var nuevas = fotos.filter(function (f) { return !f.listo; });
