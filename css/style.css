@@ -7567,9 +7567,14 @@ textarea {
 }
 
 
+/* =========================================================
+   NUEVO DISEÑO EDITORIAL PARA SERVICIOS (Anti-IA / Original)
+   ========================================================= */
 .sch-serv {
     background: var(--sch-bg);
-    padding: 90px 0;
+    padding: 100px 0 110px;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--sch-tinta);
 }
 .sch-serv-wrap {
     width: min(1240px, 100% - 48px);
@@ -7579,92 +7584,189 @@ textarea {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-bottom: 48px;
-    gap: 20px;
-    flex-wrap: wrap;
+    margin-bottom: 50px;
+    gap: 30px;
+    border-bottom: 1px solid var(--sch-borde);
+    padding-bottom: 30px;
 }
 .sch-serv-head h2 {
-    margin: 8px 0 0;
+    margin: 10px 0 0;
     font-size: clamp(2rem, 3.5vw, 2.8rem);
     font-weight: 800;
     letter-spacing: -0.03em;
+    line-height: 1.1;
     color: var(--sch-tinta);
 }
 .sch-serv-intro {
-    max-width: 36ch;
+    max-width: 420px;
     margin: 0;
-    font-size: 0.95rem;
-    font-weight: 500;
+    font-size: 0.98rem;
+    line-height: 1.65;
     color: var(--sch-gris);
-    line-height: 1.5;
+    font-weight: 500;
 }
 
-/* Grilla asimétrica o limpia estilo estudio de diseño */
-.sch-serv-grid {
+/* Grilla Asimétrica Editorial */
+.sch-serv-grid-editorial {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-}
-@media (max-width: 768px) {
-    .sch-serv-grid {
-        grid-template-columns: 1fr;
-    }
+    grid-template-columns: 1.2fr 1fr;
+    gap: 28px;
+    align-items: stretch;
 }
 
-.sch-serv-card {
-    background: #fff;
-    border: 1px solid var(--sch-borde);
-    border-radius: 20px;
-    padding: 36px;
+/* Tarjeta Principal (Destacada) */
+.sch-serv-destacada {
+    background: #1A1A1A;
+    color: #fff;
+    border-radius: 24px;
+    padding: 48px 44px;
     display: flex;
     flex-direction: column;
-    transition: border-color .25s, transform .25s;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 50px -20px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
 }
-.sch-serv-card:hover {
-    border-color: var(--sch-tinta);
-    transform: translateY(-3px);
+.sch-serv-destacada:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 30px 60px -20px rgba(220,38,38,0.25);
+}
+.sch-serv-destacada::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(220,38,38,0.22) 0%, transparent 70%);
+    pointer-events: none;
+}
+.sch-serv-destacada .sch-serv-num {
+    color: rgba(255,255,255,0.25);
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+}
+.sch-serv-badge {
+    display: inline-block;
+    background: rgba(220,38,38,0.2);
+    color: #FCA5A5;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 6px 14px;
+    border-radius: 99px;
+    border: 1px solid rgba(220,38,38,0.3);
 }
 .sch-serv-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 24px;
+    margin-bottom: 40px;
 }
-.sch-serv-num {
-    font-size: 0.85rem;
+.sch-serv-destacada h3 {
+    font-size: clamp(1.5rem, 2.2vw, 2.05rem);
     font-weight: 800;
-    letter-spacing: 0.1em;
-    color: var(--sch-gris);
+    line-height: 1.2;
+    color: #fff;
+    margin: 0 0 16px;
+    letter-spacing: -0.02em;
 }
-.sch-serv-ico {
-    display: flex;
+.sch-serv-destacada p {
+    color: rgba(255,255,255,0.75);
+    font-size: 0.98rem;
+    line-height: 1.75;
+    margin: 0 0 28px;
+    font-weight: 400;
+}
+.sch-serv-link-inline {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    background: #F2F2F2;
+    gap: 10px;
+    color: #fff !important;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none !important;
+    transition: color 0.2s ease;
 }
-.sch-serv-ico svg {
-    width: 20px;
-    height: 20px;
+.sch-serv-link-inline svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--sch-acento);
+    stroke-width: 2.2;
     fill: none;
-    stroke: var(--sch-tinta);
-    stroke-width: 1.8;
     stroke-linecap: round;
     stroke-linejoin: round;
+    transition: transform 0.2s ease;
 }
-.sch-serv-card h3 {
-    margin: 0 0 10px;
-    font-size: 1.25rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    color: var(--sch-tinta);
+.sch-serv-link-inline:hover svg {
+    transform: translateX(4px);
 }
-.sch-serv-card p {
+
+/* Columna Secundaria (Tarjetas Mini apiladas) */
+.sch-serv-col-secundaria {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.sch-serv-card-mini {
+    background: #ffffff;
+    border: 1px solid var(--sch-borde);
+    border-radius: 18px;
+    padding: 24px 28px;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.sch-serv-card-mini:hover {
+    transform: translateY(-4px);
+    border-color: var(--sch-acento);
+    box-shadow: 0 16px 35px -12px rgba(26,26,26,0.08);
+}
+.sch-serv-mini-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+.sch-serv-card-mini .sch-serv-num {
+    color: var(--sch-borde);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+}
+.sch-serv-card-mini h4 {
     margin: 0;
-    font-size: 0.95rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--sch-tinta);
+    letter-spacing: -0.01em;
+    flex: 1;
+    margin-left: 14px;
+}
+.sch-serv-card-mini p {
+    margin: 0;
+    font-size: 0.88rem;
     line-height: 1.6;
-    font-weight: 500;
     color: var(--sch-gris);
+    font-weight: 500;
+}
+
+/* Responsivo para celulares y tablets */
+@media (max-width: 991px) {
+    .sch-serv-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    .sch-serv-intro {
+        max-width: none;
+    }
+    .sch-serv-grid-editorial {
+        grid-template-columns: 1fr;
+    }
+    .sch-serv-destacada {
+        padding: 36px 28px;
+    }
 }
