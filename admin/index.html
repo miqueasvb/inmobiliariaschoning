@@ -202,7 +202,7 @@ dialog h2{font-size:1.15rem;font-weight:800}
             <option value="campo">Campo / quinta</option>
           </select></label>
       </div>
-      <label class="fld"><span class="lbl">Título *</span><input id="fTitulo" maxlength="120" placeholder="Ej: Casa de 3 dormitorios con quincho"></label>
+      <label class="fld"><span class="lbl">Título *</span><input id="fTitulo" maxlength="120" placeholder="Ej: Casa de 2 dormitorios con quincho"><span class="hint">Es el título que se ve arriba de la ficha. Los detalles van en “Descripción”.</span></label>
 
       <p class="sec">Ubicación</p>
       <div class="g2">
@@ -344,8 +344,9 @@ dialog h2{font-size:1.15rem;font-weight:800}
       return !q || norm([p.titulo, p.ubic, p.ciudad, p.barrio, TIPOS[p.tipo], p.op].join(' ')).indexOf(q) >= 0;
     }).sort(function (a, b) { return a.fecha < b.fecha ? 1 : a.fecha > b.fecha ? -1 : b.id - a.id; });
 
+    var nd = items.filter(function (x) { return x.destacada && x.activa !== false; }).length;
     var np = items.filter(function (x) { return x.activa !== false; }).length;
-    $('contador').textContent = items.length ? items.length + ' propiedades · ' + np + ' publicadas · ' + (items.length - np) + ' pausadas' + (r.length !== items.length ? ' (mostrando ' + r.length + ')' : '') : '';
+    $('contador').textContent = items.length ? items.length + ' propiedades · ' + np + ' publicadas · ' + (items.length - np) + ' pausadas · ★ ' + nd + '/6 destacadas' + (nd ? '' : ' (sin destacadas, el inicio muestra las 6 más nuevas)') + (r.length !== items.length ? ' (mostrando ' + r.length + ')' : '') : '';
     if (!r.length) {
       $('lista').innerHTML = '<div class="vacio"><h3>' + (items.length ? 'Ninguna coincide con la búsqueda' : 'Todavía no hay propiedades') + '</h3><p class="muted">' + (items.length ? 'Probá con otra palabra o cambiá el filtro.' : 'Tocá “Nueva propiedad” para cargar la primera.') + '</p></div>';
       return;
@@ -356,8 +357,9 @@ dialog h2{font-size:1.15rem;font-weight:800}
         '<div class="thumb">' + (k ? '<img src="' + esc(imgSrc(k, 1)) + '" alt="" loading="lazy" onerror="this.remove()">' : '') + '</div>' +
         '<div style="min-width:0"><h3>' + esc(p.titulo) + '</h3><p class="sub">' + esc(p.ubic || '') + '</p>' +
         '<div class="tags"><span class="tag ' + p.op + '">' + (p.op === 'venta' ? 'Venta' : 'Alquiler') + '</span><span class="tag">' + esc(TIPOS[p.tipo] || p.tipo) + '</span>' +
-        (on ? '' : '<span class="tag pausa">Pausada</span>') + '<span class="precio">' + esc(precioTxt(p)) + '</span></div></div>' +
+        (on ? '' : '<span class="tag pausa">Pausada</span>') + (p.destacada ? '<span class="tag" style="background:#FEF3C7;color:#92400E">★ Destacada</span>' : '') + '<span class="precio">' + esc(precioTxt(p)) + '</span></div></div>' +
         '<div class="acc"><button class="btn btn-sm" data-a="editar">Editar</button>' +
+        (on ? '<button class="btn btn-sm" data-a="destacar" title="' + (p.destacada ? 'Quitar de las destacadas del inicio' : 'Mostrar en las destacadas del inicio') + '">' + (p.destacada ? '★ Quitar destacada' : '☆ Destacar') + '</button>' : '') +
         (on ? '<a class="btn btn-sm" href="/propiedad.html?id=' + p.id + '" target="_blank" rel="noopener">Ver en la web</a>' : '') +
         '<button class="btn btn-sm" data-a="pausar">' + (on ? 'Pausar' : 'Publicar') + '</button>' +
         '<button class="btn btn-sm btn-peligro" data-a="borrar">Eliminar</button></div></article>';
@@ -371,6 +373,17 @@ dialog h2{font-size:1.15rem;font-weight:800}
     var id = parseInt(b.closest('[data-id]').getAttribute('data-id'), 10);
     var p = items.filter(function (x) { return x.id === id; })[0]; if (!p) return;
     if (b.dataset.a === 'editar') return abrirEditor(p);
+    if (b.dataset.a === 'destacar') {
+      var marcar = !p.destacada;
+      if (marcar && items.filter(function (x) { return x.destacada && x.activa !== false; }).length >= 6) { aviso('Ya hay 6 destacadas. Quitá una para poder destacar otra.', true); return; }
+      b.disabled = true;
+      try {
+        var rr = await api('props/' + id, { method: 'PUT', json: Object.assign({}, p, { destacada: marcar, imgs: normalizar(p) }) });
+        items = items.map(function (x) { return x.id === id ? rr.item : x; });
+        pintarLista(); aviso(marcar ? 'Destacada en el inicio' : 'Ya no está destacada');
+      } catch (err) { aviso(err.message, true); b.disabled = false; }
+      return;
+    }
     b.disabled = true;
     try {
       if (b.dataset.a === 'pausar') {

@@ -90,6 +90,7 @@ export default async (req, context) => {
       if (metodo === 'PUT') {                                // editar
         const item = limpiar(await req.json());
         item.id = id; item.fecha = prev.fecha;
+        if (item.destacada && item.activa && d.items.filter((x) => x.id !== id && x.destacada && x.activa !== false).length >= 6) throw new Pub('Ya hay 6 propiedades destacadas. Quitá una para destacar otra.');
         d.items[i] = item;
         await guardar(st, d);
         await borrarImgs(st, (prev.imgs || []).filter((k) => !item.imgs.includes(k)));

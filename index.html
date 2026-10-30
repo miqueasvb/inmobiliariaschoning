@@ -2526,6 +2526,36 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
+<!-- Destacadas: se arman con las propiedades del panel (marcadas con ★). Si no hay datos, quedan las tarjetas de ejemplo de arriba. -->
+<script src="/api/propiedades.js"></script>
+<script>
+(function () {
+    var L = window.SCH_PROPIEDADES, grid = document.querySelector('.sch-props-grid');
+    if (!grid || !L || !L.length) return;
+    var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+    var miles = function (n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); };
+    var ICON = { dorm: 'M3 18v-7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v7M3 15h18M7 9V6h10v3', bano: 'M4 12h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4zM6 12V6a2 2 0 0 1 4 0M7 19l-1 2M17 19l1 2', sup: 'M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5', ok: 'M5 12l5 5 9-10' };
+    var TIPO = { casa: 'Casa', departamento: 'Depto', terreno: 'Terreno', local: 'Local', campo: 'Campo' };
+    var PIN = 'M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z';
+    function card(p) {
+        var k = p.imgs && p.imgs.length ? p.imgs[0] : 'prop-' + p.id, venta = p.op !== 'alquiler';
+        var foto = (/^prop-\d/.test(k) ? 'img/propiedades/' : '/media/') + k + '-m.jpg';
+        var precio = p.precio ? (p.moneda === 'USD' ? 'U$S ' : '$ ') + miles(p.precio) + (venta ? '' : ' <small>/mes</small>') : 'Consultar';
+        var datos = (p.datos || []).slice(0, 3).map(function (d) { return '<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + (ICON[d[0]] || ICON.ok) + '"/></svg>' + esc(d[1]) + '</li>'; }).join('');
+        return '<a href="propiedad.html?id=' + (parseInt(p.id, 10) || 0) + '" class="sch-card">' +
+            '<div class="sch-card-foto"><svg class="sch-card-ph" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 4l9 7M5 10v10h14V10M10 20v-6h4v6"/></svg>' +
+            '<img src="' + esc(foto) + '" alt="' + esc(p.titulo) + '" loading="lazy" onerror="this.remove()">' +
+            '<span class="sch-etiqueta sch-etiqueta-' + (venta ? 'venta' : 'alquiler') + '">' + (venta ? 'En venta' : 'En alquiler') + '</span>' +
+            '<span class="sch-card-tipo">' + esc(TIPO[p.tipo] || p.tipo) + '</span><span class="sch-card-precio">' + precio + '</span></div>' +
+            '<div class="sch-card-info"><h3>' + esc(p.titulo) + '</h3>' +
+            '<p class="sch-card-ubic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + PIN + '"/><circle cx="12" cy="10" r="2.5"/></svg>' + esc(p.ubic) + '</p>' +
+            (datos ? '<ul class="sch-card-datos">' + datos + '</ul>' : '') + '</div></a>';
+    }
+    var marcadas = L.filter(function (p) { return p.destacada; });
+    var lista = (marcadas.length ? marcadas : L).slice().sort(function (a, b) { return a.fecha < b.fecha ? 1 : a.fecha > b.fecha ? -1 : b.id - a.id; }).slice(0, 6);
+    grid.innerHTML = lista.map(card).join('');
+})();
+</script>
 </body>
 
 </html>
