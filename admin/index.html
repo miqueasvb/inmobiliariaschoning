@@ -200,6 +200,7 @@ dialog h2{font-size:1.15rem;font-weight:800}
             <option value="casa">Casa</option><option value="departamento">Departamento</option>
             <option value="terreno">Terreno</option><option value="local">Local</option>
             <option value="campo">Campo / quinta</option>
+            <option value="otro">Otros</option>
           </select></label>
       </div>
       <label class="fld"><span class="lbl">Título *</span><input id="fTitulo" maxlength="120" placeholder="Ej: Casa de 2 dormitorios con quincho"><span class="hint">Es el título que se ve arriba de la ficha. Los detalles van en “Descripción”.</span></label>
@@ -279,7 +280,7 @@ dialog h2{font-size:1.15rem;font-weight:800}
   var num = function (v) { return parseInt(String(v).replace(/\D/g, ''), 10) || 0; };
   var imgSrc = function (k, m) { return (/^prop-\d/.test(k) ? '/img/propiedades/' : '/media/') + k + (m ? '-m' : '') + '.jpg'; };
   var autoImp = false, dirty = false, limpiado = false;
-  var TIPOS = { casa: 'Casa', departamento: 'Departamento', terreno: 'Terreno', local: 'Local', campo: 'Campo / quinta' };
+  var TIPOS = { casa: 'Casa', departamento: 'Departamento', terreno: 'Terreno', local: 'Local', campo: 'Campo / quinta', otro: 'Otros' };
 
   var items = [], inicializado = true, edit = null, fotos = [], op = 'venta', moneda = 'USD';
 

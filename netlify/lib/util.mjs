@@ -107,7 +107,7 @@ export const keyValida = (k) => KEY_RE.test(k) && !k.endsWith('-m');
 
 export const hoy = () => new Date().toLocaleDateString('sv-SE', { timeZone: 'America/Argentina/Buenos_Aires' });
 
-const TIPOS = ['casa', 'departamento', 'terreno', 'local', 'campo'];
+const TIPOS = ['casa', 'departamento', 'terreno', 'local', 'campo', 'otro'];
 const ICONOS = ['dorm', 'bano', 'sup', 'ok'];
 const CONOCIDOS = new Set(['id', 'op', 'tipo', 'titulo', 'ubic', 'ciudad', 'barrio', 'dorm', 'precio', 'moneda',
   'datos', 'desc', 'mapa', 'imgs', 'fotos', 'activa', 'fecha']);
