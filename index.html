@@ -1551,27 +1551,22 @@ body{background:var(--sch-bg)}
 .sch-cont-wrap,.sch-foot-wrap{width:min(1240px,100% - 48px);margin:0 auto}
 .sch-cont-head{text-align:left;margin:0 0 40px}
 .sch-cont-head h2{margin:0 0 14px;font-size:clamp(1.9rem,3.4vw,2.7rem);font-weight:800;letter-spacing:-.03em;line-height:1.1;color:var(--sch-tinta)}
-.sch-cont-grid{display:grid;grid-template-columns:5fr 7fr;gap:24px;align-items:stretch}
-.sch-cont-card{display:flex;flex-direction:column;justify-content:space-between;gap:30px;background:#1A1A1A;color:#fff;border-radius:26px;padding:34px}
-.sch-cont-eti{display:flex;align-items:center;gap:10px;margin:0 0 6px;font-size:.74rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6)}
-.sch-cont-punto{width:8px;height:8px;border-radius:50%;background:var(--sch-wsp);box-shadow:0 0 0 4px rgba(37,211,102,.18)}
-.sch-cont-tel{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px;padding:18px 20px;border:1px solid rgba(255,255,255,.22);border-radius:16px;font-size:1.35rem;font-weight:800;letter-spacing:-.02em;color:#fff!important;text-decoration:none!important;transition:background .2s,color .2s,border-color .2s}
-.sch-cont-tel svg{flex:none;width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
-.sch-cont-tel:hover{background:#fff;border-color:#fff;color:var(--sch-tinta)!important}
-.sch-cont-tel:hover svg{transform:translateX(4px)}
-.sch-cont-datos{display:grid;grid-template-columns:1fr 1fr;gap:22px;padding-top:26px;border-top:1px solid rgba(255,255,255,.14)}
-.sch-cont-datos h3{margin:0 0 8px;font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5)}
-.sch-cont-datos p{margin:0;font-size:.95rem;line-height:1.65;font-weight:500;color:rgba(255,255,255,.9)}
-.sch-cont-mapa{position:relative;min-height:440px;border-radius:26px;overflow:hidden;background:#E4E4E7;box-shadow:0 30px 60px -36px rgba(26,26,26,.55)}
-.sch-cont-mapa iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;filter:grayscale(.3) contrast(1.03)}
-.sch-cont-ir{position:absolute;left:16px;bottom:16px;display:inline-flex;align-items:center;gap:8px;height:46px;padding:0 20px;border-radius:999px;background:var(--sch-tinta);color:#fff!important;font-size:.88rem;font-weight:700;text-decoration:none!important;box-shadow:0 12px 28px -10px rgba(0,0,0,.5);transition:background .2s}
+.sch-cont-grid{display:grid;grid-template-columns:5fr 7fr;gap:40px;align-items:center}
+.sch-cont-info{display:flex;flex-direction:column;gap:28px}
+.sch-cont-info h3{margin:0 0 6px;font-size:1.05rem;font-weight:700;letter-spacing:-.01em;color:var(--sch-tinta)}
+.sch-cont-info p{margin:0;font-size:.95rem;line-height:1.65;font-weight:500;color:#52525B}
+.sch-cont-info p strong{color:var(--sch-tinta);font-weight:700}
+.sch-cont-wsp{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.sch-cont-wsp a{display:inline-flex;align-items:center;gap:9px;height:48px;padding:0 20px;border-radius:13px;background:var(--sch-wsp);color:var(--sch-tinta)!important;font-size:.92rem;font-weight:700;text-decoration:none!important;transition:background .2s,transform .15s}
+.sch-cont-wsp a svg{width:20px;height:20px;fill:var(--sch-tinta)}
+.sch-cont-wsp a:hover{background:var(--sch-wsp-osc)}
+.sch-cont-wsp a:hover svg{fill:var(--sch-tinta)}
+.sch-cont-wsp a:active{transform:scale(.98)}
+.sch-cont-wsp a{width:100%;justify-content:center}
+.sch-cont-mapa{position:relative;min-height:420px;border-radius:22px;overflow:hidden;border:1px solid #D4D4D8;background:#E4E4E7}
+.sch-cont-mapa iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.sch-cont-ir{position:absolute;left:14px;bottom:14px;display:inline-flex;align-items:center;height:44px;padding:0 20px;border-radius:999px;background:var(--sch-tinta);color:#fff!important;font-size:.88rem;font-weight:700;text-decoration:none!important;box-shadow:0 10px 24px -10px rgba(0,0,0,.5);transition:background .2s}
 .sch-cont-ir:hover{background:var(--sch-acento)}
-@media (max-width:640px){
-    .sch-cont-card{padding:24px 20px;border-radius:20px;gap:24px}
-    .sch-cont-tel{padding:16px 16px;font-size:1.2rem}
-    .sch-cont-datos{grid-template-columns:1fr;gap:18px}
-    .sch-cont-mapa{min-height:340px;border-radius:20px}
-}
 /* Footer */
 .sch-footer{background:#1A1A1A;color:rgba(255,255,255,.7)}
 .sch-foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1.2fr;gap:48px;padding:68px 0 52px}
@@ -1787,8 +1782,8 @@ body{background:var(--sch-bg)}
 <section class="sch-props" id="propiedades" aria-labelledby="schPropsTitulo">
     <div class="sch-props-wrap">
         <div class="sch-props-head">
-            <span class="sch-kicker">Propiedades destacadas</span>
-            <h2 id="schPropsTitulo">Una selección elegida por nuestro equipo.</h2>
+            <span class="sch-kicker">Selección de la inmobiliaria</span>
+            <h2 id="schPropsTitulo">Propiedades destacadas</h2>
         </div>
 
         <div class="sch-props-grid">
@@ -1939,26 +1934,27 @@ body{background:var(--sch-bg)}
 <section class="sch-contacto" id="contacto" aria-labelledby="schContTitulo">
     <div class="sch-cont-wrap">
         <div class="sch-cont-head">
-            <span class="sch-kicker">Contacto</span>
-            <h2 id="schContTitulo">Pasá por la oficina o escribinos por WhatsApp.</h2>
+            <span class="sch-kicker">Visitanos o escribinos</span>
+            <h2 id="schContTitulo">Contacto</h2>
         </div>
 
         <div class="sch-cont-grid">
-            <div class="sch-cont-card">
+            <div class="sch-cont-info">
                 <div>
-                    <p class="sch-cont-eti"><i class="sch-cont-punto" aria-hidden="true"></i>Atención por WhatsApp</p>
-                    <a class="sch-cont-tel" href="https://wa.me/5493644588807?text=Hola,%20quisiera%20hacer%20una%20consulta" target="_blank" rel="noopener noreferrer">364 458-8807 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-                    <a class="sch-cont-tel" href="https://wa.me/5493644350060?text=Hola,%20quisiera%20hacer%20una%20consulta" target="_blank" rel="noopener noreferrer">364 435-0060 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                    <h3>Dirección</h3>
+                    <p>José Hernández 387<br>Presidencia Roque Sáenz Peña, Chaco</p>
                 </div>
-                <div class="sch-cont-datos">
-                    <div>
-                        <h3>Dirección</h3>
-                        <p>José Hernández 387<br>Presidencia Roque Sáenz Peña, Chaco</p>
-                    </div>
-                    <div>
-                        <h3>Horarios</h3>
-                        <p>Lunes a viernes<br>08:00 a 12:00 hs<br>16:30 a 20:30 hs</p>
-                    </div>
+                <div>
+                    <h3>Horarios de atención</h3>
+                    <p>Lunes a Viernes<br><strong>08:00 a 12:00 hs</strong> y <strong>16:30 a 20:30 hs</strong></p>
+                </div>
+                <div>
+                    <h3>Atención directa vía WhatsApp</h3>
+                    <p>Escribinos y te respondemos a la brevedad.</p>
+                    <div class="sch-cont-wsp">
+                            <a href="https://wa.me/5493644588807?text=Hola,%20quisiera%20hacer%20una%20consulta" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>364 458-8807</a>
+                            <a href="https://wa.me/5493644350060?text=Hola,%20quisiera%20hacer%20una%20consulta" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>364 435-0060</a>
+                        </div>
                 </div>
             </div>
 
