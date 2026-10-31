@@ -286,6 +286,18 @@ h1,h2,h3,h4,p,ul{margin:0}
     .sch-gal-nav{width:40px;height:40px;margin-top:-20px}
 }
 </style>
+<style id="sch-tactil">
+/* Celulares: sin zoom accidental */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;touch-action:manipulation}
+a,button,input,select,textarea,label,summary,[role="button"]{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+@media (hover:none),(pointer:coarse){
+    /* iPhone amplía la pantalla al tocar un campo con letra menor a 16 px */
+    input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]),select,textarea{font-size:16px!important}
+    /* los efectos de "pasar el mouse" no se quedan pegados al tocar */
+    .sch-card:hover,.sch-serv-card:hover,.sch-val:hover,.sch-cont-item:hover,.ruta_card:hover,.brand-card:hover{transform:none!important}
+    .sch-card:hover .sch-card-foto img{transform:none!important}
+}
+</style>
 </head>
 <body>
 
