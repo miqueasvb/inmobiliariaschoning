@@ -1638,6 +1638,28 @@ body{background:var(--sch-bg)}
     .sch-seg button{flex:1}
     .sch-buscar{justify-content:center;width:100%}
 }
+/* ===== Inicio en celulares: portada a pantalla completa y buscador compacto debajo ===== */
+@media (max-width:640px){
+    .sch-hero{height:100vh;height:100svh;min-height:540px}
+    .sch-hero-in{width:calc(100% - 32px);padding:92px 0 34px}
+    .sch-hero h1{font-size:clamp(1.8rem,8.2vw,2.3rem);line-height:1.12}
+    .sch-lead{margin-top:14px;font-size:.98rem;line-height:1.55}
+    .sch-acciones{width:100%;max-width:none;gap:10px;margin-top:26px}
+    .sch-btn{min-height:60px;padding:8px 20px;gap:14px}
+    .sch-btn-txt strong{font-size:1rem}
+    .sch-btn-txt small{font-size:.8rem}
+    .sch-busqueda{margin-top:0;padding:20px 16px 36px;background:var(--sch-bg)}
+    .sch-busqueda .sch-buscador{animation:none;box-shadow:0 10px 30px -18px rgba(26,26,26,.35)}
+    .sch-buscador{gap:12px;padding:16px 14px 14px;border-radius:18px}
+    .sch-busc-top{align-items:center}
+    .sch-busc-titulo{font-size:1.08rem!important}
+    .sch-busc-link{font-size:.82rem}
+    .sch-label{font-size:.68rem}
+    .sch-grupo{gap:6px}
+    .sch-seg button{padding:10px 6px;font-size:.9rem}
+    .sch-select select{height:46px}
+    .sch-buscar{height:48px;font-size:.98rem}
+}
 @media (prefers-reduced-motion:reduce){
     .sch-header,.sch-nav,.sch-burger span{transition:none}
     .sch-intro{display:none}
