@@ -1549,26 +1549,27 @@ body{background:var(--sch-bg)}
 /* Contacto */
 .sch-contacto{background:var(--sch-bg);padding:90px 0 96px;color:var(--sch-tinta)}
 .sch-cont-wrap,.sch-foot-wrap{width:min(1240px,100% - 48px);margin:0 auto}
-.sch-cont-grid{display:grid;grid-template-columns:5fr 6fr;gap:clamp(28px,5vw,72px);align-items:center}
-.sch-cont-info h2{margin:18px 0 32px;max-width:15ch;font-size:clamp(1.9rem,3.6vw,2.9rem);font-weight:800;letter-spacing:-.035em;line-height:1.08;color:var(--sch-tinta);text-wrap:balance}
-.sch-cont-lista{margin:0;border-top:1.5px solid var(--sch-tinta)}
-.sch-cont-fila{display:grid;grid-template-columns:118px 1fr;gap:16px;padding:20px 0;border-bottom:1px solid #D4D4D8}
-.sch-cont-fila dt{display:flex;align-items:flex-start;gap:8px;margin:0;padding-top:5px;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#71717A}
-.sch-cont-fila dd{margin:0;font-size:1.02rem;line-height:1.6;font-weight:600;color:var(--sch-tinta)}
-.sch-cont-fila dd small{display:block;font-size:.88rem;font-weight:500;color:#71717A}
-.sch-cont-punto{flex:none;width:8px;height:8px;margin-top:3px;border-radius:50%;background:var(--sch-wsp)}
-.sch-cont-tel{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:5px 0;font-size:1.4rem;font-weight:800;letter-spacing:-.02em;color:var(--sch-tinta)!important;text-decoration:none!important;transition:color .2s}
-.sch-cont-tel span{font-size:.82rem;font-weight:700;letter-spacing:0;color:#71717A;transition:transform .2s,color .2s}
-.sch-cont-tel:hover{color:var(--sch-acento)!important}
-.sch-cont-tel:hover span{color:var(--sch-acento);transform:translateX(4px)}
+.sch-cont-head{text-align:left;margin:0 0 40px}
+.sch-cont-head h2{margin:0 0 14px;font-size:clamp(1.9rem,3.4vw,2.7rem);font-weight:800;letter-spacing:-.03em;line-height:1.1;color:var(--sch-tinta)}
+.sch-cont-grid{display:grid;grid-template-columns:5fr 7fr;gap:24px;align-items:stretch}
+.sch-cont-card{display:flex;flex-direction:column;justify-content:space-between;gap:30px;background:#1A1A1A;color:#fff;border-radius:26px;padding:34px}
+.sch-cont-eti{display:flex;align-items:center;gap:10px;margin:0 0 6px;font-size:.74rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.sch-cont-punto{width:8px;height:8px;border-radius:50%;background:var(--sch-wsp);box-shadow:0 0 0 4px rgba(37,211,102,.18)}
+.sch-cont-tel{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px;padding:18px 20px;border:1px solid rgba(255,255,255,.22);border-radius:16px;font-size:1.35rem;font-weight:800;letter-spacing:-.02em;color:#fff!important;text-decoration:none!important;transition:background .2s,color .2s,border-color .2s}
+.sch-cont-tel svg{flex:none;width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.sch-cont-tel:hover{background:#fff;border-color:#fff;color:var(--sch-tinta)!important}
+.sch-cont-tel:hover svg{transform:translateX(4px)}
+.sch-cont-datos{display:grid;grid-template-columns:1fr 1fr;gap:22px;padding-top:26px;border-top:1px solid rgba(255,255,255,.14)}
+.sch-cont-datos h3{margin:0 0 8px;font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.sch-cont-datos p{margin:0;font-size:.95rem;line-height:1.65;font-weight:500;color:rgba(255,255,255,.9)}
 .sch-cont-mapa{position:relative;min-height:440px;border-radius:26px;overflow:hidden;background:#E4E4E7;box-shadow:0 30px 60px -36px rgba(26,26,26,.55)}
 .sch-cont-mapa iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;filter:grayscale(.3) contrast(1.03)}
 .sch-cont-ir{position:absolute;left:16px;bottom:16px;display:inline-flex;align-items:center;gap:8px;height:46px;padding:0 20px;border-radius:999px;background:var(--sch-tinta);color:#fff!important;font-size:.88rem;font-weight:700;text-decoration:none!important;box-shadow:0 12px 28px -10px rgba(0,0,0,.5);transition:background .2s}
 .sch-cont-ir:hover{background:var(--sch-acento)}
 @media (max-width:640px){
-    .sch-cont-info h2{margin-bottom:24px}
-    .sch-cont-fila{grid-template-columns:1fr;gap:6px;padding:16px 0}
-    .sch-cont-tel{font-size:1.25rem}
+    .sch-cont-card{padding:24px 20px;border-radius:20px;gap:24px}
+    .sch-cont-tel{padding:16px 16px;font-size:1.2rem}
+    .sch-cont-datos{grid-template-columns:1fr;gap:18px}
     .sch-cont-mapa{min-height:340px;border-radius:20px}
 }
 /* Footer */
@@ -1786,8 +1787,8 @@ body{background:var(--sch-bg)}
 <section class="sch-props" id="propiedades" aria-labelledby="schPropsTitulo">
     <div class="sch-props-wrap">
         <div class="sch-props-head">
-            <h2 id="schPropsTitulo">Propiedades destacadas</h2>
-            <span class="sch-kicker"><i></i>Selección de la inmobiliaria</span>
+            <span class="sch-kicker">Propiedades destacadas</span>
+            <h2 id="schPropsTitulo">Una selección elegida por nuestro equipo.</h2>
         </div>
 
         <div class="sch-props-grid">
@@ -1937,28 +1938,30 @@ body{background:var(--sch-bg)}
 <!-- Contacto -->
 <section class="sch-contacto" id="contacto" aria-labelledby="schContTitulo">
     <div class="sch-cont-wrap">
+        <div class="sch-cont-head">
+            <span class="sch-kicker">Contacto</span>
+            <h2 id="schContTitulo">Pasá por la oficina o escribinos por WhatsApp.</h2>
+        </div>
+
         <div class="sch-cont-grid">
-            <div class="sch-cont-info">
-                <span class="sch-kicker"><i></i>Contacto</span>
-                <h2 id="schContTitulo">Pasá por la oficina o escribinos por WhatsApp.</h2>
-                <dl class="sch-cont-lista">
-                    <div class="sch-cont-fila">
-                        <dt>Dirección</dt>
-                        <dd>José Hernández 387<small>Presidencia Roque Sáenz Peña, Chaco</small></dd>
+            <div class="sch-cont-card">
+                <div>
+                    <p class="sch-cont-eti"><i class="sch-cont-punto" aria-hidden="true"></i>Atención por WhatsApp</p>
+                    <a class="sch-cont-tel" href="https://wa.me/5493644588807?text=Hola,%20quisiera%20hacer%20una%20consulta" target="_blank" rel="noopener noreferrer">364 458-8807 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                    <a class="sch-cont-tel" href="https://wa.me/5493644350060?text=Hola,%20quisiera%20hacer%20una%20consulta" target="_blank" rel="noopener noreferrer">364 435-0060 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                </div>
+                <div class="sch-cont-datos">
+                    <div>
+                        <h3>Dirección</h3>
+                        <p>José Hernández 387<br>Presidencia Roque Sáenz Peña, Chaco</p>
                     </div>
-                    <div class="sch-cont-fila">
-                        <dt>Horarios</dt>
-                        <dd>Lunes a viernes<small>08:00 a 12:00 hs y 16:30 a 20:30 hs</small></dd>
+                    <div>
+                        <h3>Horarios</h3>
+                        <p>Lunes a viernes<br>08:00 a 12:00 hs<br>16:30 a 20:30 hs</p>
                     </div>
-                    <div class="sch-cont-fila">
-                        <dt><i class="sch-cont-punto" aria-hidden="true"></i>WhatsApp</dt>
-                        <dd>
-                            <a class="sch-cont-tel" href="https://wa.me/5493644588807?text=Hola,%20quisiera%20hacer%20una%20consulta" target="_blank" rel="noopener noreferrer">364 458-8807 <span>Escribir →</span></a>
-                            <a class="sch-cont-tel" href="https://wa.me/5493644350060?text=Hola,%20quisiera%20hacer%20una%20consulta" target="_blank" rel="noopener noreferrer">364 435-0060 <span>Escribir →</span></a>
-                        </dd>
-                    </div>
-                </dl>
+                </div>
             </div>
+
             <div class="sch-cont-mapa">
                 <iframe title="Ubicación de Schöning Inmobiliaria en Google Maps" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3540.093498808182!2d-60.44180402353088!3d-26.798090376746973!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x44411327170e5b77%3A0x6299cb9bc09b7880!2sJos%C3%A9%20Hern%C3%A1ndez%20387%2C%20H3700%20Presidencia%20Roque%20S%C3%A1enz%20Pe%C3%B1a%2C%20Chaco!5e0!3m2!1ses!2sar!4v1710000000000!5m2!1ses!2sar" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
                 <a class="sch-cont-ir" href="https://maps.app.goo.gl/wJVQTAZtCbKob9beA" target="_blank" rel="noopener noreferrer">Cómo llegar →</a>
