@@ -1458,6 +1458,7 @@ body{background:var(--sch-bg)}
 .sch-props-wrap{width:min(1240px,100% - 48px);margin:0 auto}
 .sch-props-head{text-align:left;margin:0 0 40px}
 .sch-kicker{display:inline-flex;align-items:center;gap:10px;font-size:.74rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--sch-gris)}
+.sch-props-head .sch-kicker,.sch-serv-head .sch-kicker,.sch-cont-head .sch-kicker{color:var(--sch-gris)!important}
 .sch-kicker i{display:block;width:26px;height:2px;background:var(--sch-rojo);border-radius:2px}
 .sch-props-head h2{margin:0 0 14px;font-size:clamp(1.9rem,3.4vw,2.7rem);font-weight:800;letter-spacing:-.03em;line-height:1.1;color:var(--sch-tinta)}
 .sch-props-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
@@ -1551,11 +1552,17 @@ body{background:var(--sch-bg)}
 .sch-cont-wrap,.sch-foot-wrap{width:min(1240px,100% - 48px);margin:0 auto}
 .sch-cont-head{text-align:left;margin:0 0 40px}
 .sch-cont-head h2{margin:0 0 14px;font-size:clamp(1.9rem,3.4vw,2.7rem);font-weight:800;letter-spacing:-.03em;line-height:1.1;color:var(--sch-tinta)}
-.sch-cont-grid{display:grid;grid-template-columns:5fr 7fr;gap:40px;align-items:center}
-.sch-cont-info{display:flex;flex-direction:column;gap:28px}
-.sch-cont-info h3{margin:0 0 6px;font-size:1.05rem;font-weight:700;letter-spacing:-.01em;color:var(--sch-tinta)}
-.sch-cont-info p{margin:0;font-size:.95rem;line-height:1.65;font-weight:500;color:#52525B}
-.sch-cont-info p strong{color:var(--sch-tinta);font-weight:700}
+.sch-cont-grid{display:grid;grid-template-columns:5fr 7fr;gap:24px;align-items:stretch}
+.sch-cont-info{display:flex;flex-direction:column;gap:16px}
+.sch-cont-item{flex:1;display:flex;gap:18px;align-items:flex-start;background:#fff;border:1px solid #D4D4D8;border-radius:20px;padding:24px 26px;transition:border-color .2s,box-shadow .2s,transform .2s}
+.sch-cont-item:hover{border-color:#A1A1AA;box-shadow:0 18px 36px -24px rgba(26,26,26,.35);transform:translateY(-2px)}
+.sch-cont-ico{flex:none;display:flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;background:#1A1A1A}
+.sch-cont-ico svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.sch-cont-item:nth-child(3) .sch-cont-ico{background:var(--sch-wsp)}
+.sch-cont-item:nth-child(3) .sch-cont-ico svg{fill:#1A1A1A;stroke:none}
+.sch-cont-item h3{margin:2px 0 6px;font-size:1.05rem;font-weight:700;letter-spacing:-.01em;color:var(--sch-tinta)}
+.sch-cont-item p{margin:0;font-size:.93rem;line-height:1.65;font-weight:500;color:#52525B}
+.sch-cont-item p strong{color:var(--sch-tinta);font-weight:700}
 .sch-cont-wsp{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
 .sch-cont-wsp a{display:inline-flex;align-items:center;gap:9px;height:48px;padding:0 20px;border-radius:13px;background:var(--sch-wsp);color:var(--sch-tinta)!important;font-size:.92rem;font-weight:700;text-decoration:none!important;transition:background .2s,transform .15s}
 .sch-cont-wsp a svg{width:20px;height:20px;fill:var(--sch-tinta)}
@@ -1940,21 +1947,30 @@ body{background:var(--sch-bg)}
 
         <div class="sch-cont-grid">
             <div class="sch-cont-info">
-                <div>
-                    <h3>Dirección</h3>
-                    <p>José Hernández 387<br>Presidencia Roque Sáenz Peña, Chaco</p>
+                <div class="sch-cont-item">
+                    <span class="sch-cont-ico"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+                    <div>
+                        <h3>Dirección</h3>
+                        <p>José Hernández 387<br>Presidencia Roque Sáenz Peña, Chaco</p>
+                    </div>
                 </div>
-                <div>
-                    <h3>Horarios de atención</h3>
-                    <p>Lunes a Viernes<br><strong>08:00 a 12:00 hs</strong> y <strong>16:30 a 20:30 hs</strong></p>
+                <div class="sch-cont-item">
+                    <span class="sch-cont-ico"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+                    <div>
+                        <h3>Horarios de atención</h3>
+                        <p>Lunes a Viernes<br><strong>08:00 a 12:00 hs</strong> y <strong>16:30 a 20:30 hs</strong></p>
+                    </div>
                 </div>
-                <div>
-                    <h3>Atención directa vía WhatsApp</h3>
-                    <p>Escribinos y te respondemos a la brevedad.</p>
-                    <div class="sch-cont-wsp">
+                <div class="sch-cont-item">
+                    <span class="sch-cont-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></span>
+                    <div>
+                        <h3>Atención directa vía WhatsApp</h3>
+                        <p>Escribinos y te respondemos a la brevedad.</p>
+                        <div class="sch-cont-wsp">
                             <a href="https://wa.me/5493644588807?text=Hola,%20quisiera%20hacer%20una%20consulta" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>364 458-8807</a>
                             <a href="https://wa.me/5493644350060?text=Hola,%20quisiera%20hacer%20una%20consulta" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>364 435-0060</a>
                         </div>
+                    </div>
                 </div>
             </div>
 
