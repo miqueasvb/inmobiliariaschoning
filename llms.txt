@@ -1,0 +1,18 @@
+# Schöning Negocios Inmobiliarios
+
+> Inmobiliaria en Presidencia Roque Sáenz Peña, Chaco (Argentina). Venta y alquiler de casas, departamentos, terrenos, locales y campos. Miembro de la CCICH.
+
+Atención: lunes a viernes de 08:00 a 12:00 y de 16:30 a 20:30 hs. Dirección: José Hernández 387, Presidencia Roque Sáenz Peña, Chaco. WhatsApp: +54 9 364 458-8807 y +54 9 364 435-0060.
+
+## Propiedades
+- [Listado completo en JSON (datos estructurados, siempre actualizado)](https://www.inmobiliariaschoning.com.ar/propiedades.json): precio, moneda, operación, tipo, ubicación, características y fotos.
+- [Buscador de propiedades](https://www.inmobiliariaschoning.com.ar/propiedades.html): filtros por operación, tipo, precio y ubicación.
+- Cada propiedad tiene su ficha en /propiedad.html?id=NÚMERO (el número figura en el JSON).
+
+## Información
+- [Inicio](https://www.inmobiliariaschoning.com.ar/): propiedades destacadas, servicios y contacto.
+- [Nosotros](https://www.inmobiliariaschoning.com.ar/nosotros.html): quiénes somos.
+- [Sitemap](https://www.inmobiliariaschoning.com.ar/sitemap.xml)
+
+## Cómo contactar
+Para consultar por una propiedad, lo más directo es WhatsApp (ver números arriba). El sitio no requiere cuenta ni registro para ver propiedades.

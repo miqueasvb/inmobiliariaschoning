@@ -145,3 +145,13 @@ export function limpiar(b) {
   }
   return r;
 }
+
+/* ------------------------------------------------------------------ */
+/*  Sitio público (sitemap, feed para agentes)                         */
+/* ------------------------------------------------------------------ */
+export const SITE = (process.env.SITE_URL || 'https://www.inmobiliariaschoning.com.ar').replace(/\/$/, '');
+export const urlFoto = (k, m) => SITE + (/^prop-\d/.test(k) ? '/img/propiedades/' : '/media/') + k + (m ? '-m' : '') + '.jpg';
+export async function propiedadesPublicas() {
+  const d = await store().get('propiedades', { type: 'json' });
+  return (d?.items || []).filter((p) => p.activa !== false);
+}
