@@ -298,8 +298,15 @@ a,button,input,select,textarea,label,summary,[role="button"]{touch-action:manipu
     .sch-card:hover .sch-card-foto img{transform:none!important}
 }
 </style>
+<link rel="canonical" href="https://www.inmobiliariaschoning.com.ar/propiedad.html">
+<meta name="theme-color" content="#1A1A1A">
+<meta property="og:type" content="website"><meta property="og:locale" content="es_AR"><meta property="og:site_name" content="Schöning Negocios Inmobiliarios">
+<meta property="og:title" content="Propiedad | Schöning Negocios Inmobiliarios - Sáenz Peña, Chaco"><meta property="og:description" content="Ficha de la propiedad en Schöning Negocios Inmobiliarios, Presidencia Roque Sáenz Peña, Chaco."><meta property="og:url" content="https://www.inmobiliariaschoning.com.ar/propiedad.html"><meta property="og:image" content="https://www.inmobiliariaschoning.com.ar/img/inmobiliariaschoning.png">
+<meta name="twitter:card" content="summary"><meta name="twitter:title" content="Propiedad | Schöning Negocios Inmobiliarios - Sáenz Peña, Chaco"><meta name="twitter:description" content="Ficha de la propiedad en Schöning Negocios Inmobiliarios, Presidencia Roque Sáenz Peña, Chaco.">
+<style>.sch-saltar{position:absolute;left:-9999px;top:8px;z-index:10000;background:#1A1A1A;color:#fff;padding:12px 18px;border-radius:10px;font:700 .9rem Montserrat,sans-serif;text-decoration:none}.sch-saltar:focus{left:12px}</style>
 </head>
 <body>
+<a class="sch-saltar" href="#contenido">Saltar al contenido</a>
 
 <div class="sch-header" id="schHeader" role="banner">
     <div class="sch-bar">
@@ -336,7 +343,7 @@ a,button,input,select,textarea,label,summary,[role="button"]{touch-action:manipu
     </div>
 </section>
 
-<main class="sch-det">
+<main id="contenido" class="sch-det">
     <div class="sch-wrap">
         <a class="sch-volver" id="schVolver" href="propiedades.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Volver a propiedades</a>
         <div class="sch-det-grid" id="schDet"></div>
@@ -389,7 +396,7 @@ a,button,input,select,textarea,label,summary,[role="button"]{touch-action:manipu
                     Corredor Inmobiliario · M.P. N° 107
                 </p>
                 <a href="https://colegioinmobiliariochaco.com/" target="_blank" rel="noopener noreferrer" class="sch-badge-ccich">
-                    <img src="img/ccich.png" alt="CCICH" class="sch-badge-img">
+                    <img loading="lazy" decoding="async" src="img/ccich.png" alt="CCICH" class="sch-badge-img">
                     <div class="sch-badge-text">
                         <span>Colegio de Corredores</span>
                         <strong>Matrícula Activa</strong>
@@ -403,7 +410,7 @@ a,button,input,select,textarea,label,summary,[role="button"]{touch-action:manipu
                 <p>© <script>document.write(new Date().getFullYear());</script> <strong>Schöning Inmobiliaria</strong>. Todos los derechos reservados.</p>
                 <div class="sch-foot-credit">
                     <span>Página Web Inmobiliaria desarrollada por</span>
-                    <a href="https://www.instagram.com/rubit.studios/" target="_blank" rel="noopener noreferrer"><img src="img/rubit-studios.png" alt="Rubit Studios"></a>
+                    <a href="https://www.instagram.com/rubit.studios/" target="_blank" rel="noopener noreferrer"><img loading="lazy" decoding="async" src="img/rubit-studios.png" alt="Rubit Studios"></a>
                 </div>
             </div>
             <p class="sch-foot-disclaimer">
@@ -461,6 +468,24 @@ a,button,input,select,textarea,label,summary,[role="button"]{touch-action:manipu
     var md = document.querySelector('meta[name="description"]');
     if (md) md.setAttribute('content', TIPOS_LARGO[p.tipo] + ' ' + oper.toLowerCase() + ' en ' + p.ubic + '. ' + precio + '. Schöning Negocios Inmobiliarios, Sáenz Peña, Chaco.');
     h1.textContent = p.titulo; crumb.textContent = p.titulo;
+    (function () { /* datos para buscadores, redes y agentes de IA */
+        var BASE = 'https://www.inmobiliariaschoning.com.ar', url = BASE + '/propiedad.html?id=' + p.id, desc0 = md ? md.getAttribute('content') : '';
+        var abs = function (u) { return new URL(u, location.href).href; }, set = function (sel, a, v) { var e = document.querySelector(sel); if (e) e.setAttribute(a, v); };
+        var fotosLD = []; for (var i = 0; i < n; i++) fotosLD.push(abs(foto(i)));
+        set('link[rel="canonical"]', 'href', url);
+        set('meta[property="og:title"]', 'content', document.title); set('meta[property="og:description"]', 'content', desc0);
+        set('meta[property="og:url"]', 'content', url); set('meta[property="og:image"]', 'content', fotosLD[0]);
+        set('meta[name="twitter:title"]', 'content', document.title); set('meta[name="twitter:description"]', 'content', desc0);
+        var ld = { '@context': 'https://schema.org', '@type': 'RealEstateListing', name: p.titulo, url: url, description: p.desc || desc0, image: fotosLD, datePosted: p.fecha, inLanguage: 'es-AR',
+            about: { '@type': (p.tipo === 'casa' || p.tipo === 'departamento') ? 'Accommodation' : 'Place', name: p.titulo,
+                address: { '@type': 'PostalAddress', streetAddress: p.ubic, addressLocality: p.ciudad || 'Presidencia Roque Sáenz Peña', addressRegion: 'Chaco', addressCountry: 'AR' } },
+            provider: { '@id': BASE + '/#inmobiliaria' } };
+        if (p.dorm) ld.about.numberOfBedrooms = p.dorm;
+        if (p.precio) ld.offers = { '@type': 'Offer', price: p.precio, priceCurrency: p.moneda === 'USD' ? 'USD' : 'ARS', availability: 'https://schema.org/InStock',
+            businessFunction: p.op === 'alquiler' ? 'http://purl.org/goodrelations/v1#LeaseOut' : 'http://purl.org/goodrelations/v1#Sell' };
+        var sc = document.createElement('script'); sc.type = 'application/ld+json';
+        sc.textContent = JSON.stringify(ld).replace(/</g, '\\u003c'); document.head.appendChild(sc);
+    })();
     var wf = document.querySelector('.sch-wsp'); if (wf) wf.href = wa(WA1, msg);
 
     var ficha = [['Operación', oper], ['Tipo', TIPOS_LARGO[p.tipo]], ['Ciudad', p.ciudad], ['Barrio', p.barrio]];
